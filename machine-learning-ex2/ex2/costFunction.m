@@ -20,12 +20,13 @@ grad = zeros(size(theta));
 % Note: grad should have the same dimensions as theta
 %
 
+% cost is sum of label-specific log-cost of corresponding hypothesis
+hyp = sigmoid(X*theta);
+J = (-1/m)*sum(y.*log(hyp) + (1-y).*log(1-hyp));
 
 
-
-
-
-
+% computing grad.... this is hard
+grad = (1/m)*sum(repmat((hyp - y),1,3).*X)';
 
 % =============================================================
 

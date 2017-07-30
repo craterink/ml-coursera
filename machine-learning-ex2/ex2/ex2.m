@@ -18,6 +18,7 @@
 
 %% Initialization
 clear ; close all; clc
+set(0,'DefaultFigureWindowStyle','docked')
 
 %% Load Data
 %  The first two columns contains the exam scores and the third column
