@@ -19,6 +19,12 @@ grad = zeros(size(theta));
 %               You should set J to the cost and grad to the gradient.
 %
 
+% A. compute regularized cost
+hyp = X * theta;
+J = (1/2/m)*(sum((hyp - y).*(hyp - y)) + lambda*sum(theta(2:end).*theta(2:end)));
+
+% B. compute regularized grad
+
 
 
 
