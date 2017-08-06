@@ -107,27 +107,18 @@ Theta2_grad = (1/m)*del_2;
 %               the regularization separately and then add them to Theta1_grad
 %               and Theta2_grad from Part 2.
 
+% A. for cost function
 t1_reg = removeBiasColumn(Theta1);
 t2_reg = removeBiasColumn(Theta2);
 t1_mag = t1_reg .* t1_reg;
 t2_mag = t2_reg .* t2_reg;
 J = J + lambda/2/m*(sum(sum(t1_mag)) + sum(sum(t2_mag)));
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+% B. for grad
+t1_zeros = [zeros(size(Theta1, 1), 1) t1_reg];
+t2_zeros = [zeros(size(Theta2, 1), 1) t2_reg];
+Theta1_grad = Theta1_grad + (lambda/m)*t1_zeros;
+Theta2_grad = Theta2_grad + (lambda/m)*t2_zeros;
 
 % -------------------------------------------------------------
 
