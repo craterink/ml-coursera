@@ -56,7 +56,11 @@ Theta2_grad = zeros(size(Theta2));
         % iii. average that shit
         J = mean(cost);
         % iv. regularize that shit
-        J = J + lambda/2/m*(sum(sum(Theta1(:, 2:end))) + sum(sum(Theta2))
+        t1_reg = removeBiasColumn(Theta1);
+        t2_reg = removeBiasColumn(Theta2);
+        t1_mag = t1_reg .* t1_reg;
+        t2_mag = t2_reg .* t2_reg;
+        J = J + lambda/2/m*(sum(sum(t1_mag)) + sum(sum(t2_mag)));
 
 
 % Part 2: Implement the backpropagation algorithm to compute the gradients
@@ -107,6 +111,7 @@ Theta2_grad = zeros(size(Theta2));
 % =========================================================================
 
 % Unroll gradients
+
 grad = [Theta1_grad(:) ; Theta2_grad(:)];
 
 
