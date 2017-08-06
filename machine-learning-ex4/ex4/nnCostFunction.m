@@ -72,7 +72,33 @@ Theta2_grad = zeros(size(Theta2));
 %               first time.
 
 
+del_1 = zeros(size(Theta1));
+del_2 = zeros(size(Theta2));
+for t = 1:m
+    % A. init column vectors pertinent to example t
+    X_t = X(t, :)';
+    ymat_t = y_mat(t, :)';
+    output_t = outputs(t, :)';
+    hlo_t = hlo(t, :)';
     
+    % B. compute error terms
+    output_err = output_t - ymat_t;
+    hli =  Theta1 * X_t;
+    hlo_err = Theta2' * output_err .* sigmoidGradient([0; hli]);
+    hlo_err = hlo_err(2:end);
+    
+    % C. compute del by accumulating error terms
+    delta3 = output_err;
+    a2 = hlo_t;
+    delta2 = hlo_err;
+    a1 = X_t;
+    del_2 = del_2 + delta3 * a2';
+    del_1 = del_1 + delta2 * a1';
+    
+end
+
+Theta1_grad = (1/m)*del_1;
+Theta2_grad = (1/m)*del_2;
 
 % Part 3: Implement regularization with the cost function and gradients.
 %
@@ -81,11 +107,11 @@ Theta2_grad = zeros(size(Theta2));
 %               the regularization separately and then add them to Theta1_grad
 %               and Theta2_grad from Part 2.
 
-    t1_reg = removeBiasColumn(Theta1);
-    t2_reg = removeBiasColumn(Theta2);
-    t1_mag = t1_reg .* t1_reg;
-    t2_mag = t2_reg .* t2_reg;
-    J = J + lambda/2/m*(sum(sum(t1_mag)) + sum(sum(t2_mag)));
+t1_reg = removeBiasColumn(Theta1);
+t2_reg = removeBiasColumn(Theta2);
+t1_mag = t1_reg .* t1_reg;
+t2_mag = t2_reg .* t2_reg;
+J = J + lambda/2/m*(sum(sum(t1_mag)) + sum(sum(t2_mag)));
 
 
 
