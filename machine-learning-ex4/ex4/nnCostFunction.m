@@ -55,13 +55,6 @@ Theta2_grad = zeros(size(Theta2));
         cost = sum(logCost(y_mat, outputs), 2);
         % iii. average that shit
         J = mean(cost);
-        % iv. regularize that shit
-        t1_reg = removeBiasColumn(Theta1);
-        t2_reg = removeBiasColumn(Theta2);
-        t1_mag = t1_reg .* t1_reg;
-        t2_mag = t2_reg .* t2_reg;
-        J = J + lambda/2/m*(sum(sum(t1_mag)) + sum(sum(t2_mag)));
-
 
 % Part 2: Implement the backpropagation algorithm to compute the gradients
 %         Theta1_grad and Theta2_grad. You should return the partial derivatives of
@@ -78,6 +71,7 @@ Theta2_grad = zeros(size(Theta2));
 %               over the training examples if you are implementing it for the 
 %               first time.
 
+
     
 
 % Part 3: Implement regularization with the cost function and gradients.
@@ -86,9 +80,12 @@ Theta2_grad = zeros(size(Theta2));
 %               backpropagation. That is, you can compute the gradients for
 %               the regularization separately and then add them to Theta1_grad
 %               and Theta2_grad from Part 2.
-%
 
-
+    t1_reg = removeBiasColumn(Theta1);
+    t2_reg = removeBiasColumn(Theta2);
+    t1_mag = t1_reg .* t1_reg;
+    t2_mag = t2_reg .* t2_reg;
+    J = J + lambda/2/m*(sum(sum(t1_mag)) + sum(sum(t2_mag)));
 
 
 
