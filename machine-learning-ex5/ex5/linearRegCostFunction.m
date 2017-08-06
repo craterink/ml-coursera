@@ -7,6 +7,7 @@ function [J, grad] = linearRegCostFunction(X, y, theta, lambda)
 
 % Initialize some useful values
 m = length(y); % number of training examples
+n = size(X,2);
 
 % You need to return the following variables correctly 
 J = 0;
@@ -24,14 +25,8 @@ hyp = X * theta;
 J = (1/2/m)*(sum((hyp - y).*(hyp - y)) + lambda*sum(theta(2:end).*theta(2:end)));
 
 % B. compute regularized grad
-
-
-
-
-
-
-
-
+grad_unreg = mean(repmat((hyp - y), 1, n) .* X)';
+grad = grad_unreg + lambda/m*[0; theta(2:end)];
 
 
 
