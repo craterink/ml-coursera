@@ -38,7 +38,27 @@ Theta2_grad = zeros(size(Theta2));
 %         variable J. After implementing Part 1, you can verify that your
 %         cost function computation is correct by verifying the cost
 %         computed in ex4.m
-%
+
+    % A. feed forward the NN
+        % i. add bias unit column to X
+        X = addBiasColumn(X);
+        % ii. compute hidden layer outputs (rows are the output vectors)
+        hlo = sigmoid(X * Theta1');
+        hlo = addBiasColumn(hlo);
+        % iii. compute outputs
+        outputs = sigmoid(hlo * Theta2');
+        
+    % B. compute regularized cost
+        % i. generate binary label matrix
+        y_mat = repmat(y, 1, num_labels) == repmat(1:num_labels, m, 1);
+        % ii. compute cost for each training example
+        cost = sum(logCost(y_mat, outputs), 2);
+        % iii. average that shit
+        J = mean(cost);
+        % iv. regularize that shit
+        J = J + lambda/2/m*(sum(sum(Theta1(:, 2:end))) + sum(sum(Theta2))
+
+
 % Part 2: Implement the backpropagation algorithm to compute the gradients
 %         Theta1_grad and Theta2_grad. You should return the partial derivatives of
 %         the cost function with respect to Theta1 and Theta2 in Theta1_grad and
@@ -53,7 +73,9 @@ Theta2_grad = zeros(size(Theta2));
 %         Hint: We recommend implementing backpropagation using a for-loop
 %               over the training examples if you are implementing it for the 
 %               first time.
-%
+
+    
+
 % Part 3: Implement regularization with the cost function and gradients.
 %
 %         Hint: You can implement this around the code for
