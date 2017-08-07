@@ -51,13 +51,20 @@ error_val   = zeros(m, 1);
 %       end
 %
 
-% ---------------------- Sample Solution ----------------------
+% let lambda = 0 for calculating cost (i.e. don't penalize for large parameters)
+lambda_cost_fn = 0;
 
-
-
-
-
-
+for i = 1:m
+    X_i = X(1:i, :);
+    y_i = y(1:i);
+    
+    theta_i = trainLinearReg(X_i, y_i, lambda);
+    [cost_train_i, ~] = linearRegCostFunction(X_i,y_i,theta_i,lambda_cost_fn);
+    [cost_cv_i, ~] = linearRegCostFunction(Xval,yval,theta_i,lambda_cost_fn);
+    
+    error_train(i) = cost_train_i;
+    error_val(i) = cost_cv_i;
+end
 
 % -------------------------------------------------------------
 
