@@ -14,8 +14,14 @@ X_poly = zeros(numel(X), p);
 %               column of X contains the values of X to the p-th power.
 %
 % 
-
-
+ 
+% hm... for now instantiate to X and iteratively multiply, scooting
+% ones columns over as we iterate
+X_poly = ones(size(X_poly));
+for i = 0:p-1
+   mult = [ones(size(X, 1), i) repmat(X, 1, p-i)];
+   X_poly = X_poly .* mult;
+end
 
 
 
