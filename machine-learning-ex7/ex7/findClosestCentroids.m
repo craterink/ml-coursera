@@ -20,8 +20,21 @@ idx = zeros(size(X,1), 1);
 %
 % Note: You can use a for-loop over the examples to compute this.
 %
-
-
+[num_examples, num_dims] = size(X);
+for i = 1:num_examples
+   X_i = X(i, :);
+   best_cen_dist = Inf;
+   best_cen = NaN;
+   for j = 1:K
+       cen_j = centroids(j, :);
+       dist = sum((X_i - cen_j).^2);
+       if dist < best_cen_dist
+           best_cen_dist = dist;
+           best_cen = j;
+       end
+   end
+   idx(i) = best_cen;
+end
 
 
 
