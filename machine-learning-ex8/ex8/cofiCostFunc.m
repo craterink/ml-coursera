@@ -63,14 +63,10 @@ reg_cost = (lambda/2)*(sum(sum(Theta.^2)) + sum(sum(X.^2)));
 J = J + reg_cost;
 
 % E. Add regularization to gradients
-R_cnt_row = sum(R, 2);
-R_cnt_row_rep = repmat(R_cnt_row, 1, num_features);
-reg_X_grad = lambda*R_cnt_row_rep.*X;
+reg_X_grad = lambda*X;
 X_grad = X_grad + reg_X_grad;
 
-R_cnt_col = sum(R, 1);
-R_cnt_col_rep = repmat(R_cnt_col', 1, num_features);
-reg_Theta_grad = lambda*R_cnt_col_rep.*Theta;
+reg_Theta_grad = lambda*Theta;
 Theta_grad = Theta_grad + reg_Theta_grad;
 
 
